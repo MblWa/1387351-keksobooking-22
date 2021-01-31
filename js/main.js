@@ -3,12 +3,9 @@
 //то будем округлять их до целого значения, даже если придут с плавающей точкой.
 
 const getIntFromRange = function(min, max) {
+  let randomNumber = -1;
   min = Math.ceil(min);
   max = Math.floor(max);
-
-  if (min === max) {
-    return min;
-  }
 
   if (max < min) {
     let buffer = max;
@@ -16,7 +13,14 @@ const getIntFromRange = function(min, max) {
     min = buffer;
   }
 
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  if (min === max) {
+    randomNumber = min;
+  }
+  if (min >= 0 && max >= 0) {
+    randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  return randomNumber < 0 ? undefined : randomNumber;
 }
 
 alert(getIntFromRange(0, 10));
@@ -27,8 +31,10 @@ alert(getIntFromRange(0, 10));
 //машинный эпсилон, что позволяет включить единицу.
 
 const getFloatFromRange = function(min, max, digits) {
-  if (min === max) {
-    return Math.round(min * Math.pow(10, digits)) / Math.pow(10, digits);
+  let randomNumber = -1;
+
+  if (digits > 5) {
+    digits = 5;
   }
 
   if (max < min) {
@@ -37,7 +43,14 @@ const getFloatFromRange = function(min, max, digits) {
     min = buffer;
   }
 
-  return Math.round((Math.random() * (max - min) + min + Number.EPSILON) * Math.pow(10, digits)) / Math.pow(10, digits);
+  if (min === max) {
+    randomNumber = min;
+  }
+  if (min >= 0 && max >= 0) {
+    randomNumber = Math.round((Math.random() * (max - min) + min + Number.EPSILON) * Math.pow(10, digits)) / Math.pow(10, digits);
+  }
+
+  return randomNumber < 0 ? undefined : randomNumber;
 }
 
 alert(getFloatFromRange(0.1, 10.720, 5));
