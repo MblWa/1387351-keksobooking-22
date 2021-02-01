@@ -16,6 +16,7 @@ const getIntFromRange = function(min, max) {
   if (min === max) {
     randomNumber = min;
   }
+
   if (min >= 0 && max >= 0) {
     randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -46,6 +47,7 @@ const getFloatFromRange = function(min, max, digits) {
   if (min === max) {
     randomNumber = min;
   }
+
   if (min >= 0 && max >= 0) {
     randomNumber = Math.round((Math.random() * (max - min) + min + Number.EPSILON) * Math.pow(10, digits)) / Math.pow(10, digits);
   }
