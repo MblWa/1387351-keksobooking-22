@@ -34,7 +34,7 @@ alert(getIntFromRange(0, 10));
 const getFloatFromRange = function(min, max, digits) {
   let randomNumber = undefined;
 
-  digits = (digits > 5) ? (digits = 5) : digits;
+  digits = (digits > 5) ? 5 : digits;
 
   if (max < min) {
     let buffer = max;
