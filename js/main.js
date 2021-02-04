@@ -6,6 +6,9 @@ const X_MAX_VALUE = 35.7;
 const Y_MIN_VALUE = 139.7;
 const Y_MAX_VALUE = 139.8;
 const PRECISION = 5;
+//Ограничим пределы генерации строк с адресом аватара пользователя
+const USER_LOWER_BOUND = 1;
+const USER_UPPER_BOUND = 8;
 //Зададим ограничение на максимальное положительное число из ТЗ
 const MAXIMUM_VALUE = 10000;
 //Ограничим длину массива с фото
@@ -65,7 +68,7 @@ const createNearbyAdverts = () => {
 
   return {
     author: {
-      avatar: `img/avatars/user0${getIntFromRange(1, 8)}.png`,
+      avatar: `img/avatars/user0${getIntFromRange(USER_LOWER_BOUND, USER_UPPER_BOUND)}.png`,
     },
     offer: {
       title: 'Заголовок предложения. Придумайте самостоятельно',
