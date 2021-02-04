@@ -156,4 +156,4 @@ const getFloatFromRange = (min, max, digits) => {
 
 let adverts = new Array(NEARBY_ADVERTS).fill(null).map(() => createNearbyAdvert());
 
-alert(adverts.length);
+adverts;
