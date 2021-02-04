@@ -1,5 +1,11 @@
 //Согласно ТЗ добавим константу для генерации 10 схожих объявлений
 const NEARBY_ADVERTS = 10;
+//Ограничим координаты по Х и У согласно ТЗ с указанной точностью
+const X_MIN_VALUE = 35.65;
+const X_MAX_VALUE = 35.7;
+const Y_MIN_VALUE = 139.7;
+const Y_MAX_VALUE = 139.8;
+const PRECISION = 5;
 //Зададим ограничение на максимальное положительное число из ТЗ
 const MAXIMUM_VALUE = 10000;
 //Ограничим длину массива с фото
@@ -54,8 +60,8 @@ const getRandomArrayFromMap = (array) => {
 }
 
 const createNearbyAdverts = () => {
-  const xCoordinate = getFloatFromRange(35.65, 35.7, 5);
-  const yCoordinate = getFloatFromRange(139.7, 139.8, 5);
+  const xCoordinate = getFloatFromRange(X_MIN_VALUE, X_MAX_VALUE, PRECISION);
+  const yCoordinate = getFloatFromRange(Y_MIN_VALUE, Y_MAX_VALUE, PRECISION);
 
   return {
     author: {
