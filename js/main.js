@@ -39,8 +39,8 @@ const shuffleArray = (array) => {
 
 //Получение массива из уникального набора элементов случайной длины
 const getRandomUniqueArrayFromMap = (array) => {
-  let lowerBound = getIntFromRange(0, array.length / 2);
-  let upperBound = getIntFromRange(array.length / 2 + 1, array.length);
+  const lowerBound = getIntFromRange(0, array.length / 2);
+  const upperBound = getIntFromRange(array.length / 2 + 1, array.length);
 
   return shuffleArray(array).slice(lowerBound, upperBound);
 }
