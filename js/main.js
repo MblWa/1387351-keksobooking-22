@@ -62,7 +62,7 @@ const getRandomArrayFromMap = (array) => {
   return result.map(() => array[getIntFromRange(0, array.length - 1)]);
 }
 
-const createNearbyAdverts = () => {
+const createNearbyAdvert = () => {
   const xCoordinate = getFloatFromRange(X_MIN_VALUE, X_MAX_VALUE, PRECISION);
   const yCoordinate = getFloatFromRange(Y_MIN_VALUE, Y_MAX_VALUE, PRECISION);
 
@@ -143,6 +143,6 @@ const getFloatFromRange = (min, max, digits) => {
   return randomNumber;
 }
 
-let adverts = new Array(NEARBY_ADVERTS).fill(null).map(() => createNearbyAdverts());
+let adverts = new Array(NEARBY_ADVERTS).fill(null).map(() => createNearbyAdvert());
 
 alert(adverts.length);
