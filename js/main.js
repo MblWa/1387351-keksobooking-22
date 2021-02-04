@@ -154,6 +154,10 @@ const getFloatFromRange = (min, max, digits) => {
   return randomNumber;
 }
 
-let adverts = new Array(NEARBY_ADVERTS).fill(null).map(() => createNearbyAdvert());
+const getAdvertsNearBy = (amount) => {
+  return new Array(amount).fill(null).map(() => createNearbyAdvert());
+}
+
+const adverts = getAdvertsNearBy(NEARBY_ADVERTS);
 
 adverts;
