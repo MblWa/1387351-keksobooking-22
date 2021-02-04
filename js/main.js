@@ -14,7 +14,7 @@ const MAXIMUM_VALUE = 10000;
 //Ограничим длину массива с фото
 const MAXIMUM_PHOTO_AMOUNT = 10;
 //создадим мапы с типом жилья, временем заезда и выезда, оснащением дома, фото,
-//заголовков объявления
+//заголовков объявления, описания объявлений
 const TYPE_OF_HOUSING = ['palace', 'flat', 'house', 'bungalow'];
 const TITLES = [
   '2-к квартира, 75 м2',
@@ -26,6 +26,12 @@ const TITLES = [
   '5-к квартира, 225 м2',
   '3-к квартира, 91 м2',
   '1-к квартира, 34 м2'];
+const DESCRIPTIONS = [
+  'До ЦЕНТРА ГОРОДА 20 минут на метро без пересадок.',
+  'У нас ЕСТЬ ГОРЯЧАЯ ВОДА!!!',
+  'Квартира оснащена всем необходимым для комфортного проживания',
+  'Широкая двуспальная кровать',
+  'Раскладная гостевая кровать.'];
 const CHECKIN_OR_OUT_TIME = ['12:00', '13:00', '14:00'];
 const FEATURES_OF_HOUSING = [
   'wifi',
@@ -91,7 +97,7 @@ const createNearbyAdvert = () => {
       checkin: getRandomStringFromMap(CHECKIN_OR_OUT_TIME),
       checkout: getRandomStringFromMap(CHECKIN_OR_OUT_TIME),
       features: getRandomUniqueArrayFromMap(FEATURES_OF_HOUSING),
-      description: 'Описание помещения. Придумайте самостоятельно.',
+      description: getRandomStringFromMap(DESCRIPTIONS),
       photos: getRandomArrayFromMap(PHOTOS_OF_HOUSING),
     },
     location: {
