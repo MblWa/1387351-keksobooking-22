@@ -135,7 +135,7 @@ const getIntFromRange = (min, max) => {
 const getFloatFromRange = (min, max, digits) => {
   let randomNumber = undefined;
 
-  digits = (digits > 5) ? 5 : digits;
+  digits = (digits > PRECISION) ? PRECISION : digits;
 
   if (max < min) {
     let buffer = max;
