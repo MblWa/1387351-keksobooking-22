@@ -28,9 +28,14 @@ export { getRandomSubsetFromArray };
 
 //Получение массива строк случайной длины из набора повторяющихся элементов
 const getRandomNonUniqueSubsetFromArray = (array, maximum) => {
+  if (array.length == 0) {
+    return [];
+  }
+
   const arraySize = getIntFromRange(1, maximum);
   let result = new Array(arraySize).fill(null);
 
   return result.map(() => array[getIntFromRange(0, array.length - 1)]);
 }
+
 export { getRandomNonUniqueSubsetFromArray };

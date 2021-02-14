@@ -2,6 +2,18 @@ import { getTranslatedHousingType } from './data.js';
 
 const templateCard = document.querySelector('#card').content;
 
+const isEmptyStringOrUndefined = (serverData) => {
+  return !serverData;
+}
+
+const isEmptyArray = (serverData) => {
+  return (serverData.length === 0);
+}
+
+const hideElement = (cardElement) => {
+  return cardElement.classList.add('visually-hidden');
+}
+
 const generateStringForCapacity = (rooms, guests) => {
   let resultString = `${rooms} `;
 
@@ -78,21 +90,45 @@ const generateCard = ({ author, offer}) => {
   const cardPhoto = cardPhotosContainer.querySelector('.popup__photo');
   const cardUserAvatar = newCard.querySelector('.popup__avatar');
 
-  cardTitle.textContent = offer.title;
-  cardAddress.textContent = offer.address;
-  cardPrice.textContent = `${offer.price} ₽/ночь`;
-  cardHousingType.textContent = getTranslatedHousingType(offer.type);
-  cardCapacity.textContent = generateStringForCapacity(offer.rooms, offer.guests);
-  cardOccupation.textContent = generateStringForOccupationTime(offer.checkin, offer.checkout);
-  cardDescription.textContent = offer.description;
-  cardUserAvatar.src = author.avatar;
+  isEmptyStringOrUndefined(offer.title) ?
+    hideElement(cardTitle) :
+    cardTitle.textContent = offer.title;
+  isEmptyStringOrUndefined(offer.address) ?
+    hideElement(cardAddress) :
+    cardAddress.textContent = offer.address;
+  isEmptyStringOrUndefined(offer.price) ?
+    hideElement(cardPrice) :
+    cardPrice.textContent = `${offer.price} ₽/ночь`;
+  isEmptyStringOrUndefined(getTranslatedHousingType(offer.type)) ?
+    hideElement(cardHousingType) :
+    cardHousingType.textContent = getTranslatedHousingType(offer.type);
+  isEmptyStringOrUndefined(offer.rooms) || isEmptyStringOrUndefined(offer.guests) ?
+    hideElement(cardCapacity) :
+    cardCapacity.textContent = generateStringForCapacity(offer.rooms, offer.guests);
+  isEmptyStringOrUndefined(offer.checkin) || isEmptyStringOrUndefined(offer.checkout) ?
+    hideElement(cardOccupation) :
+    cardOccupation.textContent = generateStringForOccupationTime(offer.checkin, offer.checkout);
+  isEmptyStringOrUndefined(offer.description) ?
+    hideElement(cardDescription) :
+    cardDescription.textContent = offer.description;
+  isEmptyStringOrUndefined(author.avatar) ?
+    hideElement(cardUserAvatar) :
+    cardUserAvatar.src = author.avatar;
 
-  cardFeatures.innerHTML = '';
-  cardFeatures.appendChild(createFeaturesElements(offer.features));
+  if (isEmptyArray(offer.features)) {
+    hideElement(cardFeatures);
+  } else {
+    cardFeatures.innerHTML = '';
+    cardFeatures.appendChild(createFeaturesElements(offer.features));
+  }
 
-  const photoGallery = createImageGallery(offer.photos, cardPhoto);
-  cardPhotosContainer.innerHTML = '';
-  cardPhotosContainer.appendChild(photoGallery);
+  if (isEmptyArray(offer.photos)) {
+    hideElement(cardPhotosContainer);
+  } else {
+    const photoGallery = createImageGallery(offer.photos, cardPhoto);
+    cardPhotosContainer.innerHTML = '';
+    cardPhotosContainer.appendChild(photoGallery);
+  }
 
   return newCard;
 }
