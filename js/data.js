@@ -1,24 +1,26 @@
-import { getIntFromRange, getFloatFromRange } from './random.js';
-import { getRandomStringFromMap, getRandomUniqueArrayFromMap, getRandomArrayFromMap } from './array-random.js';
+import {
+  getIntFromRange,
+  getFloatFromRange,
+  getRandomElementFromArray,
+  getRandomSubsetFromArray,
+  getRandomNonUniqueSubsetFromArray
+} from './util.js';
 
-//Согласно ТЗ добавим константу для генерации 10 схожих объявлений
-const NEARBY_ADVERTS = 10;
 //Ограничим координаты по Х и У согласно ТЗ c указанной точностью
-const X_MIN_VALUE = 35.65;
-const X_MAX_VALUE = 35.7;
-const Y_MIN_VALUE = 139.7;
-const Y_MAX_VALUE = 139.8;
-const PRECISION = 5;
+const MIN_X_COORDINATE_VALUE = 35.65;
+const MAX_X_COORDINATE_VALUE = 35.7;
+const MIN_Y_COORDINATE_VALUE = 139.7;
+const MAX_Y_COORDINATE_VALUE = 139.8;
+const GENERATED_COORDINATE_PRECISION = 5;
 //Ограничим пределы генерации строк с адресом аватара пользователя
-const USER_LOWER_BOUND = 1;
-const USER_UPPER_BOUND = 8;
-//Зададим ограничение на максимальное положительное число из ТЗ
+const USER_AVATAR_NUMBER_LOWER_BOUND = 1;
+const USER_AVATAR_NUMBER_UPPER_BOUND = 8;
+//Зададим ограничение на максимальное положительное число для цены, комнат и гостей
 const MAXIMUM_VALUE = 10000;
-//Ограничим длину массива с фото
 const MAXIMUM_PHOTO_AMOUNT = 10;
 //создадим мапы с типом жилья, временем заезда и выезда, оснащением дома, фото,
 //заголовков объявления, описания объявлений
-const TYPE_OF_HOUSING = ['palace', 'flat', 'house', 'bungalow'];
+const HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalow'];
 const TITLES = [
   '2-к квартира, 75 м2',
   'Квартира-студия, 31 м2',
@@ -36,39 +38,43 @@ const DESCRIPTIONS = [
   'Широкая двуспальная кровать',
   'Раскладная гостевая кровать.'];
 const CHECKIN_OR_OUT_TIME = ['12:00', '13:00', '14:00'];
-const FEATURES_OF_HOUSING = [
+const HOUSING_FEATURES = [
   'wifi',
   'dishwasher',
   'parking',
   'washer',
   'elevator',
   'conditioner'];
-const PHOTOS_OF_HOUSING = [
+const HOUSING_PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
+const createUserAvatarUrl = (minimum, maximum) => {
+  return `img/avatars/user0${getIntFromRange(minimum, maximum)}.png`
+}
+
 const createNearbyAdvert = () => {
-  const xCoordinate = getFloatFromRange(X_MIN_VALUE, X_MAX_VALUE, PRECISION);
-  const yCoordinate = getFloatFromRange(Y_MIN_VALUE, Y_MAX_VALUE, PRECISION);
+  const xCoordinate = getFloatFromRange(MIN_X_COORDINATE_VALUE, MAX_X_COORDINATE_VALUE, GENERATED_COORDINATE_PRECISION);
+  const yCoordinate = getFloatFromRange(MIN_Y_COORDINATE_VALUE, MAX_Y_COORDINATE_VALUE, GENERATED_COORDINATE_PRECISION);
 
   return {
     author: {
-      avatar: `img/avatars/user0${getIntFromRange(USER_LOWER_BOUND, USER_UPPER_BOUND)}.png`,
+      avatar: createUserAvatarUrl(USER_AVATAR_NUMBER_LOWER_BOUND, USER_AVATAR_NUMBER_UPPER_BOUND),
     },
     offer: {
-      title: getRandomStringFromMap(TITLES),
+      title: getRandomElementFromArray(TITLES),
       address: `${xCoordinate}, ${yCoordinate}`,
       price: getIntFromRange(1, MAXIMUM_VALUE),
-      type: getRandomStringFromMap(TYPE_OF_HOUSING),
+      type: getRandomElementFromArray(HOUSING_TYPES),
       rooms: getIntFromRange(1, MAXIMUM_VALUE),
       guests: getIntFromRange(1, MAXIMUM_VALUE),
-      checkin: getRandomStringFromMap(CHECKIN_OR_OUT_TIME),
-      checkout: getRandomStringFromMap(CHECKIN_OR_OUT_TIME),
-      features: getRandomUniqueArrayFromMap(FEATURES_OF_HOUSING),
-      description: getRandomStringFromMap(DESCRIPTIONS),
-      photos: getRandomArrayFromMap(PHOTOS_OF_HOUSING, MAXIMUM_PHOTO_AMOUNT),
+      checkin: getRandomElementFromArray(CHECKIN_OR_OUT_TIME),
+      checkout: getRandomElementFromArray(CHECKIN_OR_OUT_TIME),
+      features: getRandomSubsetFromArray(HOUSING_FEATURES),
+      description: getRandomElementFromArray(DESCRIPTIONS),
+      photos: getRandomNonUniqueSubsetFromArray(HOUSING_PHOTOS, MAXIMUM_PHOTO_AMOUNT),
     },
     location: {
       x: xCoordinate,
@@ -81,7 +87,4 @@ const createNearbyAdvert = () => {
 const getAdvertsNearBy = (amount) => {
   return new Array(amount).fill(null).map(() => createNearbyAdvert());
 }
-
-const adverts = getAdvertsNearBy(NEARBY_ADVERTS);
-
-export { adverts };
+export { getAdvertsNearBy };

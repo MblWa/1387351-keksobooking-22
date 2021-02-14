@@ -1,5 +1,5 @@
 //Точность генерации числа с плавающей точкой
-const PRECISION = 5;
+const PRECISION__LIMIT = 5;
 
 //Генерация целых чисел из диапазона положительных чисел включительно.
 //Т.к. в ТЗ не прописано, поступают ли на вход целочисленные значения границ диапазона,
@@ -26,6 +26,7 @@ const getIntFromRange = (min, max) => {
 
   return randomNumber;
 }
+export { getIntFromRange };
 
 //Реализация функции под Кексобукинг с числами с плавающей точкой.
 //Т.к. Math.random оперирует числами в диапазоне [0, 1), исключая единицу,
@@ -35,7 +36,7 @@ const getIntFromRange = (min, max) => {
 const getFloatFromRange = (min, max, digits) => {
   let randomNumber = undefined;
 
-  digits = (digits > PRECISION) ? PRECISION : digits;
+  digits = (digits > PRECISION__LIMIT) ? PRECISION__LIMIT : digits;
 
   if (max < min) {
     let buffer = max;
@@ -54,4 +55,4 @@ const getFloatFromRange = (min, max, digits) => {
   return randomNumber;
 }
 
-export { getIntFromRange, getFloatFromRange };
+export { getFloatFromRange };
