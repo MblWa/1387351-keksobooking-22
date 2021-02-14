@@ -18,9 +18,15 @@ const USER_AVATAR_NUMBER_UPPER_BOUND = 8;
 //Зададим ограничение на максимальное положительное число для цены, комнат и гостей
 const MAXIMUM_VALUE = 10000;
 const MAXIMUM_PHOTO_AMOUNT = 10;
-//создадим мапы с типом жилья, временем заезда и выезда, оснащением дома, фото,
+//создадим массивы с типом жилья, временем заезда и выезда, оснащением дома, фото,
 //заголовков объявления, описания объявлений
 const HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const HOUSING_TYPES_RU_TRANSLATIONS = {
+  'palace': 'Дворец',
+  'flat': 'Квартира',
+  'house': 'Дом',
+  'bungalow': 'Бунгало',
+}
 const TITLES = [
   '2-к квартира, 75 м2',
   'Квартира-студия, 31 м2',
@@ -82,6 +88,11 @@ const createNearbyAdvert = () => {
     },
   };
 };
+
+const getTranslatedHousingType = (string) => {
+  return HOUSING_TYPES_RU_TRANSLATIONS[string];
+}
+export { getTranslatedHousingType };
 
 //Генерация объекта заданного размера
 const getAdvertsNearBy = (amount) => {
