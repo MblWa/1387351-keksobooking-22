@@ -1,4 +1,5 @@
 import { getTranslatedHousingType } from './data.js';
+import { getNoun } from './util.js';
 
 const templateCard = document.querySelector('#card').content;
 
@@ -15,33 +16,8 @@ const hideElement = (cardElement) => {
 }
 
 const generateStringForCapacity = (rooms, guests) => {
-  let resultString = `${rooms} `;
-
-  switch (rooms) {
-    case 1:
-      resultString += 'комната';
-      break;
-    case 2:
-    case 3:
-    case 4:
-      resultString += 'комнаты';
-      break;
-    default:
-      resultString += 'комнат';
-      break;
-  }
-  resultString += ` для ${guests} `;
-
-  switch (guests) {
-    case 1:
-      resultString += 'гостя';
-      break;
-    default:
-      resultString += 'гостей';
-      break;
-  }
-
-  return resultString;
+  return rooms + ' ' + getNoun(rooms, 'комната', 'комнаты', 'комнат') +
+  ' для ' + guests + ' ' + getNoun(guests, 'гостя', 'гостей', 'гостей');
 }
 
 const generateStringForOccupationTime = (checkin, checkout) => {
@@ -90,30 +66,53 @@ const generateCard = ({ author, offer}) => {
   const cardPhoto = cardPhotosContainer.querySelector('.popup__photo');
   const cardUserAvatar = newCard.querySelector('.popup__avatar');
 
-  isEmptyStringOrUndefined(offer.title) ?
-    hideElement(cardTitle) :
+  if (isEmptyStringOrUndefined(offer.title)) {
+    hideElement(cardTitle);
+  } else {
     cardTitle.textContent = offer.title;
-  isEmptyStringOrUndefined(offer.address) ?
-    hideElement(cardAddress) :
+  }
+
+  if (isEmptyStringOrUndefined(offer.address)) {
+    hideElement(cardAddress);
+  } else {
     cardAddress.textContent = offer.address;
-  isEmptyStringOrUndefined(offer.price) ?
-    hideElement(cardPrice) :
+  }
+
+  if (isEmptyStringOrUndefined(offer.price)) {
+    hideElement(cardPrice);
+  } else {
     cardPrice.textContent = `${offer.price} ₽/ночь`;
-  isEmptyStringOrUndefined(getTranslatedHousingType(offer.type)) ?
-    hideElement(cardHousingType) :
+  }
+
+  if (isEmptyStringOrUndefined(getTranslatedHousingType(offer.type))) {
+    hideElement(cardHousingType);
+  } else {
     cardHousingType.textContent = getTranslatedHousingType(offer.type);
-  isEmptyStringOrUndefined(offer.rooms) || isEmptyStringOrUndefined(offer.guests) ?
-    hideElement(cardCapacity) :
+  }
+
+  if (isEmptyStringOrUndefined(offer.rooms) || isEmptyStringOrUndefined(offer.guests)) {
+    hideElement(cardCapacity);
+  } else {
     cardCapacity.textContent = generateStringForCapacity(offer.rooms, offer.guests);
-  isEmptyStringOrUndefined(offer.checkin) || isEmptyStringOrUndefined(offer.checkout) ?
-    hideElement(cardOccupation) :
+  }
+
+  if (isEmptyStringOrUndefined(offer.checkin) || isEmptyStringOrUndefined(offer.checkout)) {
+    hideElement(cardOccupation);
+  } else {
     cardOccupation.textContent = generateStringForOccupationTime(offer.checkin, offer.checkout);
-  isEmptyStringOrUndefined(offer.description) ?
-    hideElement(cardDescription) :
+  }
+
+  if (isEmptyStringOrUndefined(offer.description)) {
+    hideElement(cardDescription);
+  } else {
     cardDescription.textContent = offer.description;
-  isEmptyStringOrUndefined(author.avatar) ?
-    hideElement(cardUserAvatar) :
+  }
+
+  if (isEmptyStringOrUndefined(author.avatar)) {
+    hideElement(cardUserAvatar);
+  } else {
     cardUserAvatar.src = author.avatar;
+  }
 
   if (isEmptyArray(offer.features)) {
     hideElement(cardFeatures);
@@ -133,14 +132,4 @@ const generateCard = ({ author, offer}) => {
   return newCard;
 }
 
-const getCards = (adverts) => {
-  const cardsList = document.createDocumentFragment();
-
-  for (let i = 0; i < adverts.length; i++) {
-    cardsList.appendChild(generateCard(adverts[i]));
-  }
-
-  return cardsList;
-}
-
-export { getCards };
+export { generateCard };

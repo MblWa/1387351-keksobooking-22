@@ -44,7 +44,13 @@ const DESCRIPTIONS = [
   'Широкая двуспальная кровать',
   'Раскладная гостевая кровать.'];
 const CHECKIN_OR_OUT_TIME = ['12:00', '13:00', '14:00'];
-const HOUSING_FEATURES = [];
+const HOUSING_FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'];
 const HOUSING_PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
