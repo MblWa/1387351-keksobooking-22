@@ -1,36 +1,41 @@
-import { getIntFromRange } from './random.js';
+import { getIntFromRange } from './util.js';
 
-//Случайное значение из массива
-const getRandomStringFromMap = (array) => {
+const getRandomElementFromArray = (array) => {
   return array[getIntFromRange(0, array.length - 1)];
 }
+export { getRandomElementFromArray };
 
 //Перемешивание массива методом Дурштенфельда
 const shuffleArray = (array) => {
-  const arrayForWork = array.slice();
+  const arrayShallowCopy = array.slice();
 
-  for (let i = arrayForWork.length - 1; i > 0; i--) {
+  for (let i = arrayShallowCopy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arrayForWork[i], arrayForWork[j]] = [arrayForWork[j], arrayForWork[i]];
+    [arrayShallowCopy[i], arrayShallowCopy[j]] = [arrayShallowCopy[j], arrayShallowCopy[i]];
   }
 
-  return arrayForWork;
+  return arrayShallowCopy;
 };
 
 //Получение массива из уникального набора элементов случайной длины
-const getRandomUniqueArrayFromMap = (array) => {
+const getRandomSubsetFromArray = (array) => {
   const lowerBound = getIntFromRange(0, array.length / 2);
   const upperBound = getIntFromRange(array.length / 2 + 1, array.length);
 
   return shuffleArray(array).slice(lowerBound, upperBound);
 }
+export { getRandomSubsetFromArray };
 
 //Получение массива строк случайной длины из набора повторяющихся элементов
-const getRandomArrayFromMap = (array, maximum) => {
+const getRandomNonUniqueSubsetFromArray = (array, maximum) => {
+  if (array.length == 0) {
+    return [];
+  }
+
   const arraySize = getIntFromRange(1, maximum);
   let result = new Array(arraySize).fill(null);
 
   return result.map(() => array[getIntFromRange(0, array.length - 1)]);
 }
 
-export { getRandomStringFromMap, getRandomUniqueArrayFromMap, getRandomArrayFromMap };
+export { getRandomNonUniqueSubsetFromArray };
