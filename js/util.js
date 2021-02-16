@@ -8,7 +8,9 @@ import {
   getRandomNonUniqueSubsetFromArray
 } from './array-utils.js';
 
-let getNoun = (number, one, two, five) => {
+//Функция по склонению существительных во множественном числе от tomfun
+//https://gist.github.com/tomfun/830fa6d8030d16007bbab50a5b21ef97
+const getNoun = (number, one, two, five) => {
   let n = Math.abs(number);
 
   n %= 100;

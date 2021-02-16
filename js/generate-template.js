@@ -16,8 +16,7 @@ const hideElement = (cardElement) => {
 }
 
 const generateStringForCapacity = (rooms, guests) => {
-  return rooms + ' ' + getNoun(rooms, 'комната', 'комнаты', 'комнат') +
-  ' для ' + guests + ' ' + getNoun(guests, 'гостя', 'гостей', 'гостей');
+  return `${rooms} ${getNoun(rooms, 'комната', 'комнаты', 'комнат')} для ${guests} ${getNoun(guests, 'гостя', 'гостей', 'гостей')}`;
 }
 
 const generateStringForOccupationTime = (checkin, checkout) => {
