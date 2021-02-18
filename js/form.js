@@ -1,8 +1,40 @@
+import { GENERATED_COORDINATE_PRECISION } from './data.js';
+
 const selectForm = (className) => {
   return document.querySelector(className);
 }
 
 export { selectForm };
+
+const disableForm = (form, className) => {
+  form.classList.add(className);
+  const formFields = form.children;
+
+  for (let i = 0; i < formFields.length; i++) {
+    formFields[i].disabled = true;
+  }
+}
+
+export { disableForm };
+
+const enableForm = (form, className) => {
+  form.classList.remove(className);
+  const formFields = form.children;
+
+  for (let i = 0; i < formFields.length; i++) {
+    formFields[i].disabled = false;
+  }
+}
+
+export { enableForm };
+
+const updateAddress = (form, coordinates) => {
+  const lat = coordinates.lat.toFixed(GENERATED_COORDINATE_PRECISION);
+  const lng = coordinates.lng.toFixed(GENERATED_COORDINATE_PRECISION);
+  form.querySelector('#address').placeholder = `${lat}, ${lng}`;
+}
+
+export { updateAddress };
 
 const form = selectForm('.ad-form');
 const housingType = form.querySelector('#type');

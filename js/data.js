@@ -12,6 +12,7 @@ const MAX_X_COORDINATE_VALUE = 35.7;
 const MIN_Y_COORDINATE_VALUE = 139.7;
 const MAX_Y_COORDINATE_VALUE = 139.8;
 const GENERATED_COORDINATE_PRECISION = 5;
+export { GENERATED_COORDINATE_PRECISION };
 //Ограничим пределы генерации строк с адресом аватара пользователя
 const USER_AVATAR_NUMBER_LOWER_BOUND = 1;
 const USER_AVATAR_NUMBER_UPPER_BOUND = 8;
