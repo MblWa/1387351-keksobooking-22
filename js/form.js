@@ -1,4 +1,10 @@
-const form = document.querySelector('.ad-form');
+const selectForm = (className) => {
+  return document.querySelector(className);
+}
+
+export { selectForm };
+
+const form = selectForm('.ad-form');
 const housingType = form.querySelector('#type');
 const housingPrice = form.querySelector('#price');
 const checkinSelect = form.querySelector('#timein');
@@ -10,6 +16,8 @@ const MINIMUM_HOUSING_PRICE = {
   'house': 5000,
   'bungalow': 0,
 };
+
+
 
 housingType.addEventListener('change', () => {
   housingPrice.placeholder = MINIMUM_HOUSING_PRICE[housingType.value];
