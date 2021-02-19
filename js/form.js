@@ -28,10 +28,10 @@ const enableForm = (form, className) => {
 
 export { enableForm };
 
-const updateAddress = (form, coordinates) => {
+const updateAddress = (addressInput, coordinates) => {
   const lat = coordinates.lat.toFixed(GENERATED_COORDINATE_PRECISION);
   const lng = coordinates.lng.toFixed(GENERATED_COORDINATE_PRECISION);
-  form.querySelector('#address').placeholder = `${lat}, ${lng}`;
+  addressInput.placeholder = `${lat}, ${lng}`;
 }
 
 export { updateAddress };

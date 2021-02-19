@@ -26,6 +26,7 @@ const mapLayer = document.querySelector('#map-canvas');
 
 const adForm = selectForm('.ad-form');
 const filterForm = selectForm('.map__filters');
+const addressInput = adForm.querySelector('#address');
 
 //Отключение формы при инициализации страницы до загрузки карты
 disableForm(adForm, 'ad-form--disabled');
@@ -35,7 +36,7 @@ const map = LEAFLET_MAP.map(mapLayer)
   .on('load', () => {
     enableForm(adForm, 'ad-form--disabled');
     enableForm(filterForm, 'map__filters--disabled');
-    updateAddress(adForm, TOKYO_CITY_CENTER_COORD);
+    updateAddress(addressInput, TOKYO_CITY_CENTER_COORD);
   })
   .setView(TOKYO_CITY_CENTER_COORD, ZOOM);
 
@@ -58,7 +59,7 @@ const mainMarker = LEAFLET_MAP.marker(
 
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
-  updateAddress(adForm, evt.target.getLatLng());
+  updateAddress(addressInput, evt.target.getLatLng());
 });
 
 const adverts = getAdvertsNearBy(NEARBY_ADVERTS_QTY);
