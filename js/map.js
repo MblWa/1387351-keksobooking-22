@@ -11,6 +11,17 @@ const TOKYO_CITY_CENTER_COORD = {
   lng: 139.839478,
 }
 const ZOOM = 10;
+const MAIN_PIN_ICON_ATTR = {
+  iconUrl: './img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+}
+const AD_PIN_ICON_ATTR = {
+  iconUrl: './img/pin.svg',
+  iconSize: [26, 26],
+  iconAnchor: [13, 26],
+}
+
 const mapLayer = document.querySelector('#map-canvas');
 
 const adForm = selectForm('.ad-form');
@@ -35,11 +46,7 @@ LEAFLET_MAP.tileLayer(
   },
 ).addTo(map);
 
-const mainPinIcon = LEAFLET_MAP.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
+const mainPinIcon = LEAFLET_MAP.icon(MAIN_PIN_ICON_ATTR);
 
 const mainMarker = LEAFLET_MAP.marker(
   TOKYO_CITY_CENTER_COORD,
@@ -57,11 +64,7 @@ mainMarker.on('moveend', (evt) => {
 const adverts = getAdvertsNearBy(NEARBY_ADVERTS_QTY);
 
 adverts.forEach((advert) => {
-  const adPinIcon = LEAFLET_MAP.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [26, 26],
-    iconAnchor: [13, 26],
-  });
+  const adPinIcon = LEAFLET_MAP.icon(AD_PIN_ICON_ATTR);
   const adMarker = LEAFLET_MAP.marker(
     {
       lat: advert.location.x,
