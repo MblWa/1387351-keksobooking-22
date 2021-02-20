@@ -103,22 +103,22 @@ checkoutSelect.addEventListener('change', () => {
 
 const adFormFields = adForm.elements;
 const formInputs = Array.from(adFormFields)
-  .filter(tag => ["select", "textarea", "input"]
-  .includes(tag.tagName.toLowerCase()));
+  .filter(tag => ['select', 'textarea', 'input']
+    .includes(tag.tagName.toLowerCase()));
 
 submitButton.addEventListener('click', (evt) => {
   evt.preventDefault;
   formInputs.forEach((input) => {
     if (!input.validity.valid) {
-      input.style.borderColor = "red";
-      input.style.borderWidth = "2px";
+      input.style.borderColor = 'red';
+      input.style.borderWidth = '2px';
     }
   });
 });
 
 const addCustomValiditytoCapacity = () => {
   if (!ROOM_CAPACITY[roomValue.value].includes(capacityValue.value)) {
-    capacityValue.setCustomValidity(`Количество комнат не подходит этому количеству гостей`);
+    capacityValue.setCustomValidity('Количество комнат не подходит этому количеству гостей');
   } else {
     capacityValue.setCustomValidity('');
   }
