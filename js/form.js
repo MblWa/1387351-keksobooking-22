@@ -64,13 +64,13 @@ const ROOM_CAPACITY = {
 
 adTitle.addEventListener('input', () => {
   const titleLength = adTitle.value.length;
+  adTitle.setCustomValidity('');
 
   if (titleLength < MIN_TITLE_LENGTH) {
     adTitle.setCustomValidity(`Заголовок объявления должен содержать не менее ${MIN_TITLE_LENGTH}. Добавьте ещё ${MIN_TITLE_LENGTH - titleLength} симв.`);
-  } else if (titleLength > MAX_TITLE_LENGTH) {
+  }
+  if (titleLength > MAX_TITLE_LENGTH) {
     adTitle.setCustomValidity(`Заголовок объявления должен быть короче ${MIN_TITLE_LENGTH} символов. Удалите лишние ${titleLength - MAX_TITLE_LENGTH} симв.`);
-  } else {
-    adTitle.setCustomValidity('');
   }
 
   adTitle.reportValidity();
