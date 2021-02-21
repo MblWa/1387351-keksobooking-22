@@ -1,4 +1,5 @@
 import { GENERATED_COORDINATE_PRECISION } from './data.js';
+import { getNoun } from './util.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -56,10 +57,10 @@ const MINIMUM_HOUSING_PRICE = {
   'bungalow': 0,
 };
 const ROOM_CAPACITY = {
-  '1': ['1'],
-  '2': ['2', '1'],
-  '3': ['3', '2', '1'],
-  '100': ['0'],
+  '1': {'1': 'для 1 гостя'},
+  '2': {'2':'для 2 гостей', '1': 'для 1 гостя'},
+  '3': {'3':'для 3 гостей', '2':'для 2 гостей', '1': 'для 1 гостя'},
+  '100': {'0': 'не для гостей'},
 };
 
 adTitle.addEventListener('input', () => {
@@ -117,8 +118,9 @@ submitButton.addEventListener('click', (evt) => {
 });
 
 const addCustomValiditytoCapacity = () => {
-  if (!ROOM_CAPACITY[roomValue.value].includes(capacityValue.value)) {
-    capacityValue.setCustomValidity('Количество комнат не подходит этому количеству гостей');
+  if (!Object.keys(ROOM_CAPACITY[roomValue.value]).includes(capacityValue.value)) {
+    capacityValue.setCustomValidity(`При выборе ${roomValue.value} ${getNoun(roomValue.value, 'комнаты', 'комнат', 'комнат')} доступны места:
+    ${Object.values(ROOM_CAPACITY[roomValue.value]).join(', ')}.`);
   } else {
     capacityValue.setCustomValidity('');
   }
