@@ -79,11 +79,10 @@ adTitle.addEventListener('input', () => {
 
 housingPrice.addEventListener('input', () => {
   const price = housingPrice.value;
+  housingPrice.setCustomValidity('');
 
   if (price < MINIMUM_HOUSING_PRICE[housingType.value]) {
     housingPrice.setCustomValidity(`Цена не может быть менее ${MINIMUM_HOUSING_PRICE[housingType.value]}`);
-  } else {
-    housingPrice.setCustomValidity('');
   }
 
   housingPrice.reportValidity();
@@ -118,11 +117,11 @@ submitButton.addEventListener('click', (evt) => {
 });
 
 const addCustomValiditytoCapacity = () => {
+  capacityValue.setCustomValidity('');
+
   if (!Object.keys(ROOM_CAPACITY[roomValue.value]).includes(capacityValue.value)) {
     capacityValue.setCustomValidity(`При выборе ${roomValue.value} ${getNoun(roomValue.value, 'комнаты', 'комнат', 'комнат')} доступны места:
     ${Object.values(ROOM_CAPACITY[roomValue.value]).join(', ')}.`);
-  } else {
-    capacityValue.setCustomValidity('');
   }
 
   capacityValue.reportValidity();
