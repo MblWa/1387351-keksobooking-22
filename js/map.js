@@ -1,8 +1,8 @@
+/* global L:readonly */
 import { selectForm, disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
 
-const LEAFLET_MAP = window.L;
 //Константа для задания количества схожих объявлений при их генерации
 const NEARBY_ADVERTS_QTY = 10;
 
@@ -32,7 +32,7 @@ const addressInput = adForm.querySelector('#address');
 disableForm(adForm, 'ad-form--disabled');
 disableForm(filterForm, 'map__filters--disabled');
 
-const map = LEAFLET_MAP.map(mapLayer)
+const map = L.map(mapLayer)
   .on('load', () => {
     enableForm(adForm, 'ad-form--disabled');
     enableForm(filterForm, 'map__filters--disabled');
@@ -40,16 +40,16 @@ const map = LEAFLET_MAP.map(mapLayer)
   })
   .setView(TOKYO_CITY_CENTER_COORD, ZOOM);
 
-LEAFLET_MAP.tileLayer(
+L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
 
-const mainPinIcon = LEAFLET_MAP.icon(MAIN_PIN_ICON_ATTR);
+const mainPinIcon = L.icon(MAIN_PIN_ICON_ATTR);
 
-const mainMarker = LEAFLET_MAP.marker(
+const mainMarker = L.marker(
   TOKYO_CITY_CENTER_COORD,
   {
     draggable: true,
@@ -65,8 +65,8 @@ mainMarker.on('moveend', (evt) => {
 const adverts = getAdvertsNearBy(NEARBY_ADVERTS_QTY);
 
 adverts.forEach((advert) => {
-  const adPinIcon = LEAFLET_MAP.icon(AD_PIN_ICON_ATTR);
-  const adMarker = LEAFLET_MAP.marker(
+  const adPinIcon = L.icon(AD_PIN_ICON_ATTR);
+  const adMarker = L.marker(
     {
       lat: advert.location.x,
       lng: advert.location.y,
