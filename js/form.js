@@ -40,6 +40,10 @@ const updateAddress = (addressInput, coordinates) => {
 
 export { updateAddress };
 
+const setInputBorder = (input) => {
+  !input.validity.valid ? input.classList.add('error-border') : input.classList.remove('error-border');
+}
+
 const adForm = selectForm('.ad-form');
 const adTitle = adForm.querySelector('#title');
 const housingType = adForm.querySelector('#type');
@@ -74,6 +78,7 @@ adTitle.addEventListener('input', () => {
     adTitle.setCustomValidity(`Заголовок объявления должен быть короче ${MIN_TITLE_LENGTH} символов. Удалите лишние ${titleLength - MAX_TITLE_LENGTH} симв.`);
   }
 
+  setInputBorder(adTitle);
   adTitle.reportValidity();
 });
 
@@ -85,6 +90,7 @@ housingPrice.addEventListener('input', () => {
     housingPrice.setCustomValidity(`Цена не может быть менее ${MINIMUM_HOUSING_PRICE[housingType.value]}`);
   }
 
+  setInputBorder(housingPrice);
   housingPrice.reportValidity();
 });
 
@@ -106,13 +112,9 @@ const formInputs = Array.from(adFormFields)
   .filter(tag => ['select', 'textarea', 'input']
     .includes(tag.tagName.toLowerCase()));
 
-submitButton.addEventListener('click', (evt) => {
-  evt.preventDefault;
+submitButton.addEventListener('click', () => {
   formInputs.forEach((input) => {
-    if (!input.validity.valid) {
-      input.style.borderColor = 'red';
-      input.style.borderWidth = '2px';
-    }
+    setInputBorder(input);
   });
 });
 
@@ -124,9 +126,9 @@ const addCustomValiditytoCapacity = () => {
     ${Object.values(ROOM_CAPACITY[roomValue.value]).join(', ')}.`);
   }
 
+  setInputBorder(capacityValue);
   capacityValue.reportValidity();
 }
 
 roomValue.addEventListener('change', addCustomValiditytoCapacity);
-
 capacityValue.addEventListener('change', addCustomValiditytoCapacity);

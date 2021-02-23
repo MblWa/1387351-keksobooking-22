@@ -1026,3 +1026,8 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.ad-form__element input.error-border,
+.ad-form__element select.error-border {
+  border: 2px solid red;
+}
