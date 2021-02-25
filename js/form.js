@@ -1,5 +1,8 @@
 import { GENERATED_COORDINATE_PRECISION } from './data.js';
+import { resetMarkerAndAddress } from './map.js';
 import { getNoun } from './util.js';
+import { sendData } from './api.js';
+import { openErrorPopup, openSuccessPopup } from './popups.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -45,12 +48,14 @@ const setInputBorder = (input) => {
 }
 
 const adForm = selectForm('.ad-form');
+const filterForm = selectForm('.map__filters');
 const adTitle = adForm.querySelector('#title');
 const housingType = adForm.querySelector('#type');
 const housingPrice = adForm.querySelector('#price');
 const checkinSelect = adForm.querySelector('#timein');
 const checkoutSelect = adForm.querySelector('#timeout');
 const submitButton = adForm.querySelector('.ad-form__submit');
+const resetButton = adForm.querySelector('.ad-form__reset');
 const roomValue = adForm.querySelector('#room_number');
 const capacityValue = adForm.querySelector('#capacity');
 
@@ -132,3 +137,32 @@ const addCustomValiditytoCapacity = () => {
 
 roomValue.addEventListener('change', addCustomValiditytoCapacity);
 capacityValue.addEventListener('change', addCustomValiditytoCapacity);
+
+const resetForm = (successFlag) => {
+  adForm.reset();
+  filterForm.reset();
+  resetMarkerAndAddress();
+
+  if (successFlag) {
+    openSuccessPopup();
+  }
+
+}
+
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(true),
+      () => openErrorPopup(),
+      new FormData(evt.target),
+    );
+  });
+}
+
+setUserFormSubmit(resetForm);
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm(false)
+});
