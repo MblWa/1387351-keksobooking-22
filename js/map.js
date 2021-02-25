@@ -67,6 +67,7 @@ mainMarker.on('moveend', (evt) => {
 
 const resetMarkerAndAddress = () => {
   map.setView(TOKYO_CITY_CENTER_COORD, ZOOM);
+  map.closePopup();
   mainMarker.setLatLng(TOKYO_CITY_CENTER_COORD);
   updateAddress(addressInput, TOKYO_CITY_CENTER_COORD);
 }
