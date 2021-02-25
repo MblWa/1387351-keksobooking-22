@@ -44,9 +44,7 @@ export { getTranslatedHousingType };
 
 //Генерация объекта заданного размера на основании полученных данных
 const getAdvertsNearBy = (serverData) => {
-  return new Array(serverData.length).fill(null).map((value, index) => {
-    return value = createNearbyAdvert(serverData[index]);
-  });
+  return serverData.map(createNearbyAdvert);
 }
 
 export { getAdvertsNearBy };
