@@ -2,15 +2,18 @@
 import { selectForm, disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
+import { getData } from './api.js';
+import { showAlert } from './util.js';
 
-//Константа для задания количества схожих объявлений при их генерации
-const NEARBY_ADVERTS_QTY = 10;
-
+const ADVERTS_QTY = 10;
 const TOKYO_CITY_CENTER_COORD = {
   lat: 35.652832,
   lng: 139.839478,
 }
-const ZOOM = 10;
+
+export { TOKYO_CITY_CENTER_COORD };
+
+const ZOOM = 8.4;
 const MAIN_PIN_ICON_ATTR = {
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
@@ -62,20 +65,31 @@ mainMarker.on('moveend', (evt) => {
   updateAddress(addressInput, evt.target.getLatLng());
 });
 
-const adverts = getAdvertsNearBy(NEARBY_ADVERTS_QTY);
+const resetMarkerAndAddress = () => {
+  map.setView(TOKYO_CITY_CENTER_COORD, ZOOM);
+  map.closePopup();
+  mainMarker.setLatLng(TOKYO_CITY_CENTER_COORD);
+  updateAddress(addressInput, TOKYO_CITY_CENTER_COORD);
+}
 
-adverts.forEach((advert) => {
-  const adPinIcon = L.icon(AD_PIN_ICON_ATTR);
-  const adMarker = L.marker(
-    {
-      lat: advert.location.x,
-      lng: advert.location.y,
-    },
-    {
-      icon: adPinIcon,
-    },
-  );
+export { resetMarkerAndAddress };
 
-  adMarker.addTo(map)
-    .bindPopup(generateCard(advert));
-});
+getData((ads) => {
+  const adverts = getAdvertsNearBy(ads.slice(0, ADVERTS_QTY));
+
+  adverts.forEach((advert) => {
+    const adPinIcon = L.icon(AD_PIN_ICON_ATTR);
+    const adMarker = L.marker(
+      {
+        lat: advert.location.x,
+        lng: advert.location.y,
+      },
+      {
+        icon: adPinIcon,
+      },
+    );
+
+    adMarker.addTo(map)
+      .bindPopup(generateCard(advert));
+  });
+}, showAlert);
