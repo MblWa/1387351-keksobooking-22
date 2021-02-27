@@ -63,11 +63,11 @@ const isAcceptableAd = (advert) => {
   }
 
   if (isNotAny(filter.rooms)) {
-    flags.push(filter.rooms === ('' + advert.offer.rooms))
+    flags.push(filter.rooms === advert.offer.rooms.toString())
   }
 
   if (isNotAny(filter.guests)) {
-    flags.push(filter.guests === ('' + advert.offer.guests))
+    flags.push(filter.guests === advert.offer.guests.toString())
   }
 
   return !flags.includes(false);
