@@ -1,3 +1,9 @@
+const PRICES = {
+  'low': 10000,
+  'high': 50000,
+  'any': 0,
+}
+
 const filterForm = document.querySelector('.map__filters');
 const typeFilterInput = filterForm.querySelector('#housing-type');
 const priceFilterInput = filterForm.querySelector('#housing-price');
@@ -5,12 +11,6 @@ const roomsFilterInput = filterForm.querySelector('#housing-rooms');
 const guestsFilterInput = filterForm.querySelector('#housing-guests');
 const featuresFilterFieldset = filterForm.querySelector('#housing-features');
 const featuresFilterInputs = featuresFilterFieldset.querySelectorAll('input');
-
-const PRICES = {
-  'low': 10000,
-  'high': 50000,
-  'any': 0,
-}
 
 const getSelectedFeatures = (inputs) => {
   return Array.from(inputs).reduce((accumulator, input) => {
