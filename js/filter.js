@@ -10,15 +10,10 @@ const priceFilterInput = filterForm.querySelector('#housing-price');
 const roomsFilterInput = filterForm.querySelector('#housing-rooms');
 const guestsFilterInput = filterForm.querySelector('#housing-guests');
 const featuresFilterFieldset = filterForm.querySelector('#housing-features');
-const featuresFilterInputs = featuresFilterFieldset.querySelectorAll('input');
 
 const getSelectedFeatures = (inputs) => {
-  return Array.from(inputs).reduce((accumulator, input) => {
-    if (input.checked === true) {
-      accumulator.push(input.value);
-    }
-    return accumulator;
-  }, []);
+  return Array.from(inputs.querySelectorAll('input:checked'))
+    .map(input => input.value);
 }
 
 const generateFilterCard = () => {
@@ -27,7 +22,7 @@ const generateFilterCard = () => {
     type: typeFilterInput.value,
     rooms: roomsFilterInput.value,
     guests: guestsFilterInput.value,
-    features: getSelectedFeatures(featuresFilterInputs),
+    features: getSelectedFeatures(featuresFilterFieldset),
   }
 }
 
