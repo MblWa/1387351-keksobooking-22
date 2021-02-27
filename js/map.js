@@ -3,9 +3,10 @@ import { selectForm, disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
 import { getData } from './api.js';
-import { showAlert } from './util.js';
+import { showAlert, debounce } from './util.js';
 import { setFilterChange, filterAdverts } from './filter.js';
 
+const RENDER_DELAY = 500;
 const ADVERTS_QTY = 10;
 const TOKYO_CITY_CENTER_COORD = {
   lat: 35.652832,
@@ -100,5 +101,8 @@ const renderMarkers = (adverts) => {
 getData((ads) => {
   const adverts = getAdvertsNearBy(ads);
   renderMarkers(adverts);
-  setFilterChange(() => renderMarkers(adverts));
+  setFilterChange(debounce(
+    () => renderMarkers(adverts),
+    RENDER_DELAY,
+  ));
 }, showAlert);
