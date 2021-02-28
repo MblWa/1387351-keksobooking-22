@@ -31,6 +31,28 @@ const getNoun = (number, one, two, five) => {
   return five;
 }
 
+//модификация дебаунс-метода из библиотеки underscore с учетом нужд проекта
+//underscorejs.org/#debounce
+const debounce = (cb, delay) => {
+  let timeout;
+
+  return () => {
+    const later = () => {
+      timeout = null;
+      cb.apply(this);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, delay);
+
+    if (!timeout) {
+      cb.apply(this);
+    }
+  };
+};
+
+export { debounce };
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;

@@ -3,8 +3,10 @@ import { selectForm, disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
 import { getData } from './api.js';
-import { showAlert } from './util.js';
+import { showAlert, debounce } from './util.js';
+import { setFilterChange, filterAdverts } from './filter.js';
 
+const RENDER_DELAY = 500;
 const ADVERTS_QTY = 10;
 const TOKYO_CITY_CENTER_COORD = {
   lat: 35.652832,
@@ -59,6 +61,8 @@ const mainMarker = L.marker(
     icon: mainPinIcon,
   },
 );
+//Слой для всех пинов с объявлениями
+const adLayer = L.layerGroup().addTo(map);
 
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
@@ -74,10 +78,10 @@ const resetMarkerAndAddress = () => {
 
 export { resetMarkerAndAddress };
 
-getData((ads) => {
-  const adverts = getAdvertsNearBy(ads.slice(0, ADVERTS_QTY));
-
-  adverts.forEach((advert) => {
+const renderMarkers = (adverts) => {
+  map.closePopup();
+  adLayer.clearLayers();
+  filterAdverts(adverts).slice(0, ADVERTS_QTY).forEach((advert) => {
     const adPinIcon = L.icon(AD_PIN_ICON_ATTR);
     const adMarker = L.marker(
       {
@@ -89,7 +93,16 @@ getData((ads) => {
       },
     );
 
-    adMarker.addTo(map)
+    adMarker.addTo(adLayer)
       .bindPopup(generateCard(advert));
   });
+}
+
+getData((ads) => {
+  const adverts = getAdvertsNearBy(ads);
+  renderMarkers(adverts);
+  setFilterChange(debounce(
+    () => renderMarkers(adverts),
+    RENDER_DELAY,
+  ));
 }, showAlert);
