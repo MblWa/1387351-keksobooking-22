@@ -139,8 +139,11 @@ roomValue.addEventListener('change', addCustomValiditytoCapacity);
 capacityValue.addEventListener('change', addCustomValiditytoCapacity);
 
 const resetForm = (successFlag) => {
+  const event = new Event('change');
+
   adForm.reset();
   filterForm.reset();
+  filterForm.dispatchEvent(event);
   resetMarkerAndAddress();
 
   if (successFlag) {
