@@ -1,12 +1,3 @@
-import {
-  getIntFromRange,
-  getFloatFromRange
-} from './random.js';
-import {
-  getRandomElementFromArray,
-  getRandomSubsetFromArray,
-  getRandomNonUniqueSubsetFromArray
-} from './array-utils.js';
 //Задержка отображения окна с ошибкой
 const ALERT_SHOW_TIME = 3000;
 //Функция по склонению существительных во множественном числе от tomfun
@@ -30,7 +21,7 @@ const getNoun = (number, one, two, five) => {
 
   return five;
 }
-
+export { getNoun };
 //модификация дебаунс-метода из библиотеки underscore с учетом нужд проекта
 //underscorejs.org/#debounce
 const debounce = (cb, delay) => {
@@ -74,12 +65,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 }
 
-export {
-  getIntFromRange,
-  getFloatFromRange,
-  getRandomElementFromArray,
-  getRandomSubsetFromArray,
-  getRandomNonUniqueSubsetFromArray,
-  getNoun,
-  showAlert
-};
+export { showAlert };

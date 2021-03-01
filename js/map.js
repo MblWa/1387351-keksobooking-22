@@ -1,5 +1,5 @@
 /* global L:readonly */
-import { selectForm, disableForm, enableForm, updateAddress } from './form.js';
+import { disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
 import { getData } from './api.js';
@@ -29,8 +29,8 @@ const AD_PIN_ICON_ATTR = {
 
 const mapLayer = document.querySelector('#map-canvas');
 
-const adForm = selectForm('.ad-form');
-const filterForm = selectForm('.map__filters');
+const adForm = document.querySelector('.ad-form');
+const filterForm = document.querySelector('.map__filters');
 const addressInput = adForm.querySelector('#address');
 
 //Отключение формы при инициализации страницы до загрузки карты
