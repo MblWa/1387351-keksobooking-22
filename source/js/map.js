@@ -1,4 +1,6 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 import { disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
