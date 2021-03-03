@@ -1,4 +1,6 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 import { disableForm, enableForm, updateAddress } from './form.js';
 import { getAdvertsNearBy } from './data.js';
 import { generateCard } from './generate-template.js';
@@ -40,8 +42,16 @@ disableForm(filterForm, 'map__filters--disabled');
 const map = L.map(mapLayer)
   .on('load', () => {
     enableForm(adForm, 'ad-form--disabled');
-    enableForm(filterForm, 'map__filters--disabled');
     updateAddress(addressInput, TOKYO_CITY_CENTER_COORD);
+    getData((ads) => {
+      const adverts = getAdvertsNearBy(ads);
+      enableForm(filterForm, 'map__filters--disabled');
+      renderMarkers(adverts);
+      setFilterChange(debounce(
+        () => renderMarkers(adverts),
+        RENDER_DELAY,
+      ));
+    }, showAlert);
   })
   .setView(TOKYO_CITY_CENTER_COORD, ZOOM);
 
@@ -97,12 +107,3 @@ const renderMarkers = (adverts) => {
       .bindPopup(generateCard(advert));
   });
 }
-
-getData((ads) => {
-  const adverts = getAdvertsNearBy(ads);
-  renderMarkers(adverts);
-  setFilterChange(debounce(
-    () => renderMarkers(adverts),
-    RENDER_DELAY,
-  ));
-}, showAlert);
