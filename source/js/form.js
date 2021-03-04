@@ -79,7 +79,7 @@ const updateAddress = (addressInput, coordinates) => {
 
 export { updateAddress };
 
-const addCustomValiditytoCapacity = () => {
+const onCapacityValueChange = () => {
   capacityValue.setCustomValidity('');
 
   if (!Object.keys(ROOM_CAPACITY[roomValue.value]).includes(capacityValue.value)) {
@@ -164,8 +164,8 @@ submitButton.addEventListener('click', () => {
   });
 });
 
-roomValue.addEventListener('change', addCustomValiditytoCapacity);
-capacityValue.addEventListener('change', addCustomValiditytoCapacity);
+roomValue.addEventListener('change', onCapacityValueChange);
+capacityValue.addEventListener('change', onCapacityValueChange);
 
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
