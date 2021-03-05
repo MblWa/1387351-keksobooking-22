@@ -1,13 +1,7 @@
+import { MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION } from './form.js';
 //Ограничим координаты по Х и У с указанной точностью
 const GENERATED_COORDINATE_PRECISION = 5;
 export { GENERATED_COORDINATE_PRECISION };
-
-const HOUSING_TYPES_RU_TRANSLATIONS = {
-  'palace': 'Дворец',
-  'flat': 'Квартира',
-  'house': 'Дом',
-  'bungalow': 'Бунгало',
-}
 
 const createNearbyAdvert = ({author, location, offer}) => {
   const xCoordinate = location.lat.toFixed(GENERATED_COORDINATE_PRECISION);
@@ -38,7 +32,7 @@ const createNearbyAdvert = ({author, location, offer}) => {
 };
 
 const getTranslatedHousingType = (string) => {
-  return HOUSING_TYPES_RU_TRANSLATIONS[string];
+  return MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION[string].translationRus;
 }
 export { getTranslatedHousingType };
 

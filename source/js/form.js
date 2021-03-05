@@ -7,12 +7,15 @@ import { resetPreviewImages } from './file-selector.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const MINIMUM_HOUSING_PRICE = {
-  'palace': 10000,
-  'flat': 1000,
-  'house': 5000,
-  'bungalow': 0,
+const MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION = {
+  'palace': { price: 10000, translationRus: 'Дворец' },
+  'flat': { price: 1000, translationRus: 'Квартира' },
+  'house': { price: 5000, translationRus: 'Дом' },
+  'bungalow': { price: 0, translationRus: 'Бунгало' },
 };
+
+export { MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION };
+
 const ROOM_CAPACITY = {
   '1': {'1': 'для 1 гостя'},
   '2': {'2':'для 2 гостей', '1': 'для 1 гостя'},
@@ -137,8 +140,8 @@ housingPrice.addEventListener('input', () => {
   const price = housingPrice.value;
   housingPrice.setCustomValidity('');
 
-  if (price < MINIMUM_HOUSING_PRICE[housingType.value]) {
-    housingPrice.setCustomValidity(`Цена не может быть менее ${MINIMUM_HOUSING_PRICE[housingType.value]}`);
+  if (price < MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION[housingType.value].price) {
+    housingPrice.setCustomValidity(`Цена не может быть менее ${MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION[housingType.value].price}`);
   }
 
   setInputBorder(housingPrice);
@@ -146,8 +149,8 @@ housingPrice.addEventListener('input', () => {
 });
 
 housingType.addEventListener('change', () => {
-  housingPrice.placeholder = MINIMUM_HOUSING_PRICE[housingType.value];
-  housingPrice.min = MINIMUM_HOUSING_PRICE[housingType.value];
+  housingPrice.placeholder = MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION[housingType.value].price;
+  housingPrice.min = MINIMUM_HOUSING_PRICE_AND_RU_TRANSLATION[housingType.value].price;
 });
 
 checkinSelect.addEventListener('change', () => {
