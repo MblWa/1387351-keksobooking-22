@@ -50,6 +50,9 @@ const isAcceptableAd = (advert) => {
       case 'middle':
         flags.push((advert.offer.price >= PRICES['low']) && (advert.offer.price <= PRICES['high']));
         break;
+      default:
+        flags.push(false);
+        break;
     }
   }
 
